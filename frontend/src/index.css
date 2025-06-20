@@ -1,0 +1,273 @@
+/* Variables CSS */
+:root {
+  --primary-color: #002244; /* Azul oscuro principal de Delta */
+  --primary-color-dark: #001a33; /* Un tono más oscuro del azul principal */
+  --primary-color-light: #e6e9ed; /* Un gris azulado claro para fondos */
+  --secondary-text-color: #6c757d; /* Gris para texto secundario */
+  --light-gray-bg: #f8f9fa; /* Fondo gris muy claro para secciones */
+  /* Nuevo color de fondo para ServicesList, un tono más suave del azul de fondo anterior */
+  --services-bg-color: #f0f8ff; /* Un azul muy claro, casi blanco, o #E8F3F8 */
+}
+
+/* --- Estilos Generales de Sección --- */
+.section {
+  padding: 80px 0; /* Un poco más de padding para secciones grandes */
+  overflow: hidden;
+}
+
+.bg-light-gray {
+  background-color: var(--light-gray-bg);
+}
+
+.bg-primary-light {
+  background-color: var(--primary-color-light); /* Fondo para la sección ambiental */
+}
+
+.bg-primary {
+  background-color: var(--primary-color);
+}
+
+/* --- Estilos para la sección de Servicios (ServicesList) --- */
+.services-section {
+  background-color: var(--services-bg-color);
+  padding: 5rem 2rem;
+}
+
+.service-item {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.4rem 1rem rgba(0,0,0,0.1);
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  padding: 2rem;
+  /* --- CAMBIOS CLAVE AQUÍ PARA CENTRAR EL CONTENIDO --- */
+  display: flex; /* Habilita Flexbox */
+  flex-direction: column; /* Apila los elementos verticalmente */
+  align-items: center; /* Centra los elementos horizontalmente en el contenedor flex */
+  text-align: center; /* Centra el texto dentro de los elementos */
+  /* --- FIN CAMBIOS CLAVE --- */
+  justify-content: flex-start; /* Puedes mantener esto si quieres que empiecen desde arriba */
+  height: 100%; /* Asegura que la tarjeta ocupe toda la altura disponible en la fila */
+}
+
+.service-item .service-icon {
+  font-size: 4rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  /* --- Asegúrate de que el ícono no tenga márgenes o alineaciones que lo desplacen --- */
+  display: block; /* Asegura que el ícono ocupe su propia línea para un mejor centrado si es necesario */
+  /* margin: 0 auto; /* Opcional: si los íconos aún no se centran bien con align-items: center */
+}
+
+.service-item h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color-dark);
+  margin-bottom: 0.75rem;
+}
+
+.service-item p {
+  font-size: 1.1rem;
+  color: var(--secondary-text-color);
+  line-height: 1.6;
+  flex-grow: 1; /* Permite que el párrafo crezca y empuje el contenido hacia arriba si es necesario */
+}
+
+.centrar {
+    text-align: justify;
+}
+
+hr {
+  border: none; /* Elimina el borde predeterminado */
+  height: 2px; /* Define el alto de la línea */
+  background-color: rgba(228, 138, 153, 0.521); /* Usa tu color principal definido en variables */
+  margin: .2rem auto; /* Añade margen superior e inferior y céntrala */
+  opacity: 0.7; /* Opcional: Para hacerla un poco transparente */
+}
+
+.footerl hr { /* Agregué '.footerl' para mayor especificidad */
+  border: none;
+  height: 4px;
+  background-color: rgba(29, 28, 22, 0.555);
+  margin: 0.01rem;
+  opacity: 0.7;
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0.8rem 1.8rem rgba(216, 154, 154, 0.2) !important;
+  cursor: pointer;
+}
+
+/* --- Animación al pasar el mouse sobre las tarjetas de servicio --- */
+.animate-on-hover:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0.8rem 1.8rem rgba(0,0,0,0.2) !important;
+  cursor: pointer;
+}
+
+/* --- Otros estilos generales que ya tenías y son importantes --- */
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.text-secondary {
+  color: var(--secondary-text-color) !important;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Estilos para el Header y la Navegación */
+/* ---------------------------------------------------------------------- */
+
+/* Estilos de escritorio por defecto para el menú de navegación */
+.navmenu {
+  display: flex; /* Los elementos del menú se muestran en línea en escritorio */
+  align-items: center; /* Alinea verticalmente los ítems del menú */
+  transition: all 0.3s ease-in-out; /* Transición general para suavizar cambios */
+  position: static; /* Asegura que no sea fixed/absolute en escritorio */
+  background: none; /* No hay fondo oscuro en escritorio */
+  width: auto;
+  height: auto;
+  opacity: 1; /* Siempre visible */
+  pointer-events: auto; /* Siempre interactivo */
+  flex-direction: row; /* Horizontal */
+  padding: 0; /* Sin padding extra */
+}
+
+.navmenu ul {
+  display: flex; /* Los ítems de la lista se muestran en línea en escritorio */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-direction: row; /* Horizontal */
+}
+
+.navmenu ul li {
+  margin: 0 15px; /* Espaciado entre los ítems del menú en escritorio */
+}
+
+.navmenu ul li a {
+  padding: 10px 0; /* Espaciado dentro de cada ítem de enlace */
+  display: block;
+  color: #333; /* Color de los enlaces en escritorio */
+  text-decoration: none;
+  font-weight: normal; /* Normal en escritorio */
+  white-space: nowrap; /* Evita que los enlaces se rompan en varias líneas */
+  transition: color 0.3s ease; /* Transición para el color al pasar el ratón */
+}
+
+.navmenu ul li a:hover,
+.navmenu ul li a.active {
+  color: var(--primary-color); /* Usar la variable de color principal para hover/activo en escritorio */
+}
+
+/* Ocultar el botón de hamburguesa en pantallas grandes (escritorio) */
+.mobile-nav-toggle {
+  display: none;
+}
+
+/* Botón de contacto para escritorio
+  Si la clase 'd-none d-sm-block' de Bootstrap está en el HTML, manejará la visibilidad.
+  Si no, puedes usar un media query específico para display.
+*/
+.cta-btn.d-none.d-sm-block {
+  /* Por defecto, esta clase de Bootstrap hace que sea visible en sm+ y oculto en xs */
+  /* Si no usas Bootstrap, puedes definir tu propio media query aquí */
+}
+
+/* Estilo general del cta-btn */
+.cta-btn {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 9999px; /* Equivalente a rounded-full de Tailwind */
+  background-color: var(--primary-color); /* Usar la variable de color principal */
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: var(--primary-color-dark); /* Un tono más oscuro en hover */
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* Estilos para pantallas pequeñas (móviles y tablets) */
+/* Este media query aplica los estilos cuando la pantalla es de 991px o menos */
+@media (max-width: 991px) {
+
+  /* Mostrar el botón de hamburguesa en pantallas pequeñas */
+  .mobile-nav-toggle {
+    display: block; /* Muestra el icono de la hamburguesa */
+    position: fixed; /* O 'absolute', si prefieres que se desplace con el scroll */
+    top: 30px; /* Ajustado para bajarlo un poco */
+    right: 20px; /* Ajusta según tu diseño */
+    z-index: 1001; /* Asegura que esté por encima de todo */
+    font-size: 32px; /* Tamaño del icono */
+    color: var(--primary-color); /* Cambiado a un color oscuro para contraste */
+    cursor: pointer;
+    background: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    outline: none; /* Sin outline al hacer click */
+    padding: 10px; /* Área de clic más grande */
+  }
+
+  /* Estado inicial oculto del menú móvil (fuera de la vista y transparente) */
+  .navmenu {
+    position: fixed; /* Para que ocupe toda la pantalla y se deslice */
+    top: 0;
+    right: -100%; /* Inicia fuera de la vista a la derecha */
+    width: 100%;
+    height: 100vh; /* 100% de la altura del viewport */
+    background: rgba(17, 17, 17, 0.95); /* Fondo oscuro semi-transparente (#111 con opacidad) */
+    z-index: 1000; /* Debajo del toggle */
+    transition: right 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Transición para deslizamiento y opacidad */
+    flex-direction: column; /* Apilar los elementos verticalmente */
+    justify-content: center; /* Centrar verticalmente los ítems */
+    align-items: center; /* Centrar horizontalmente los ítems */
+    opacity: 0; /* Empieza invisible para la transición de fade */
+    pointer-events: none; /* Deshabilita los clics cuando está oculto */
+    display: flex; /* Mantiene flex para la animación de 'right' */
+  }
+
+  /* Cuando el menú está activo (abierto) */
+  .navmenu.mobile-nav-active {
+    right: 0; /* Desliza el menú para que sea visible */
+    opacity: 1; /* Hace visible el menú con un fade */
+    pointer-events: auto; /* Habilita los clics cuando está visible */
+  }
+
+  /* Estilos para los ítems de lista en el menú móvil */
+  .navmenu ul {
+    flex-direction: column; /* Apila los ítems verticalmente */
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    margin: 0; /* Elimina márgenes por defecto */
+  }
+
+  .navmenu ul li {
+    margin: 20px 0; /* Espacio vertical entre los ítems del menú móvil */
+    list-style: none; /* Asegura que no haya viñetas */
+  }
+
+  .navmenu ul li a {
+    color: rgb(94, 28, 28); /* Color de los enlaces en el menú móvil */
+    font-size: 24px; /* Tamaño de fuente para los enlaces móviles */
+    padding: 15px 0;
+    display: block; /* Para que ocupen todo el ancho y se puedan hacer clic fácilmente */
+    text-decoration: none;
+    font-weight: bold; /* Negrita en móvil */
+    transition: color 0.3s ease; /* Transición para el color al pasar el ratón */
+  }
+
+  .navmenu ul li a:hover,
+  .navmenu ul li a.active {
+    color: #60A5FA; /* Un color azul claro de Tailwind para hover/activo en móvil */
+  }
+
+  /* Ocultar el botón Contáctanos en móvil */
+  /* Esta regla apunta específicamente a la clase d-none d-sm-block si está en el HTML */
+  .cta-btn.d-none.d-sm-block {
+    display: none !important; /* Fuerza la ocultación para el botón principal */
+  }
+}
+
+/* Fin de los estilos del menú responsivo */

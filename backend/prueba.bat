@@ -1,0 +1,1 @@
+curl -X POST http://localhost:5000/api/contacto \-H "Content-Type: application/json" \-d "{\"nombre\":\"Juan\",\"email\":\"juan@example.com\",\"telefono\":\"123456789\",\"mensaje\":\"Hola Mundo\"}"
