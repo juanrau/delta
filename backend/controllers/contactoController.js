@@ -8,6 +8,19 @@ const db = require('../models'); // Importamos el objeto 'db' completo que conti
 
 const nodemailer = require('nodemailer'); // Importa Nodemailer
 const axios = require('axios');       // Importa Axios para la verificación de reCAPTCHA
+const validator = require('validator');
+
+const verificarRecaptcha = async (token) => {
+    try {
+        const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+        const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
+        const response = await axios.post(verificationUrl);
+        return response.data;
+    } catch (error) {
+        console.error('Error al verificar reCAPTCHA:', error);
+        return { success: false, 'error-codes': ['recaptcha-verification-failed'] };
+    }
+};
 
 exports.enviarMensaje = async (req, res) => {
     // Desestructuramos los datos del cuerpo de la solicitud, incluyendo el token de reCAPTCHA
@@ -19,31 +32,10 @@ exports.enviarMensaje = async (req, res) => {
         return res.status(400).json({ message: 'reCAPTCHA no verificado. Por favor, completa la verificación.' });
     }
 
-    try {
-        const secretKey = process.env.RECAPTCHA_SECRET_KEY;
-        const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
+    const recaptchaResult = await verificarRecaptcha(recaptchaToken);
 
-        // Hacemos una petición POST a la API de verificación de Google reCAPTCHA
-        const recaptchaResponse = await axios.post(verificationUrl);
-        const { success, score, 'error-codes': errorCodes } = recaptchaResponse.data;
-
-        // Si la verificación no fue exitosa (es decir, Google dice que es un bot o hay un problema)
-        if (!success) {
-            console.error('Fallo en la verificación de reCAPTCHA:', errorCodes || 'No se recibieron códigos de error.');
-            return res.status(400).json({ message: 'Verificación de reCAPTCHA fallida. Parece que eres un bot o algo salió mal.' });
-        }
-
-        // Opcional: Si usas reCAPTCHA v3 (invisible) en lugar de v2 (checkbox), 
-        // puedes verificar el 'score' aquí para decidir si la interacción es humana.
-        // if (score && score < 0.5) { // Un score bajo (cerca de 0.0) indica bot. Ajusta este umbral.
-        //     console.warn('reCAPTCHA score bajo:', score, 'para el email:', email);
-        //     return res.status(400).json({ message: 'Actividad sospechosa detectada por reCAPTCHA. Intenta de nuevo.' });
-        // }
-
-    } catch (recaptchaError) {
-        // Captura errores de red o de comunicación con la API de reCAPTCHA
-        console.error('Error al comunicarse con la API de reCAPTCHA:', recaptchaError.message);
-        return res.status(500).json({ message: 'Error interno del servidor al verificar reCAPTCHA.' });
+    if (!recaptchaResult.success || recaptchaResult.hostname !== 'localhost') {
+        return res.status(400).json({ message: 'Verificación de reCAPTCHA fallida. Parece que eres un bot o algo salió mal.' });
     }
 
     // --- 2. Validación y Saneamiento de Datos del Formulario ---
@@ -52,7 +44,7 @@ exports.enviarMensaje = async (req, res) => {
         return res.status(400).json({ message: 'Nombre, Email y Mensaje son campos obligatorios.' });
     }
     // Regex simple para validar el formato básico del email
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { 
+    if (!validator.isEmail(email)) {
         return res.status(400).json({ message: 'El formato del email es inválido.' });
     }
     // Limitamos la longitud de los campos para prevenir ataques de desbordamiento o spam masivo

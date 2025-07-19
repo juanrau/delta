@@ -194,7 +194,7 @@ export default function Contacto() {
                     <div className="mb-3 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="300">
                       <ReCAPTCHA
                         ref={recaptchaRef} // Asignamos la referencia
-                        sitekey="6Lc2KmcrAAAAACJh4KcpxjrfhP7qJS3Mzs_Imlr4" // <<-- ¡IMPORTANTE! Reemplaza con tu clave de sitio
+                        sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY} // <<-- ¡IMPORTANTE! Reemplaza con tu clave de sitio
                         onChange={onRecaptchaChange}
                         onExpired={() => setFormData(prevState => ({ ...prevState, recaptchaToken: null }))} // Resetea el token si expira
                         onErrored={() => setFormData(prevState => ({ ...prevState, recaptchaToken: null }))} // Resetea el token si hay un error
@@ -205,7 +205,7 @@ export default function Contacto() {
                       <button 
                         type="submit" 
                         className="btn btn-primary rounded-pill px-5 py-2 fw-bold" 
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || !formData.recaptchaToken}
                       >
                         {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
                       </button>
